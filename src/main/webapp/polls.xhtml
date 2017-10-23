@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/homepage.xhtml">
+	<ui:param name="pageTitle" value="Recent Polls" />
+	<ui:param name="pageURL" value="" />
+	<ui:param name="pageType" value="website" />
+	<ui:param name="pageImage" value="" />
+	<ui:define name="content">
+		<c:forEach items="#{questionController.list}" var="item">
+		
+			<ppc:poll question="#{item}" heading="#{questionController.displayCreated(item.created)}"></ppc:poll>
+			<div style="padding-bottom: 40px" />
+		</c:forEach>
+		
+	</ui:define>
+	<ui:define name="sidebar">
+		<div class="sub-article-heading">TRENDING STORIES</div>
+			<c:forEach items="#{postClientController.trendingPosts}" var="item">
+				<ppc:sub-article item="#{item}" showcategory="true" ></ppc:sub-article>
+			</c:forEach>
+			<div style="margin-top: 10px">
+			<h:outputText value="#{offerController.getOfferHTML('category_sidebar')}" escape="false"/>
+		</div>
+	</ui:define>
+	
+	
+</ui:composition>
+</html>

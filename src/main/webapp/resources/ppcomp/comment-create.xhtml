@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+
+
+</composite:interface>
+<composite:implementation>
+	
+
+		<h:form>
+			<div id="commentsid" class="container">
+
+				<c:choose>
+
+					<c:when test="#{activeCommentorController.isLoggedIn}">
+						<h:outputLabel for="editor"
+							value="Commenting as: #{activeCommentorController.commentorName}" />
+						<p:editor id="editor" widgetVar="editorWidget" value="#{postSingleController.currentComment}" width="600" />
+						<h:panelGrid columns="2" style="margin-top: 10px">
+							<p:commandButton value="Submit" icon="ui-icon-disk" actionListener="#{postSingleController.addComment}" oncomplete="PF('editorWidget').clear();">
+							</p:commandButton> 
+
+							<p:commandButton value="Clear" type="button"
+								onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
+						</h:panelGrid>
+
+						<p:dialog header="Content" widgetVar="dlg" showEffect="fade"
+							hideEffect="fade">
+							<h:outputText id="display" value="#{editorView.text}"
+								escape="false" />
+						</p:dialog>
+
+					</c:when>
+					<c:otherwise>
+						<p>You must <p:commandLink onclick="PF('dlLogin').show()" value="Login"  style="color:blue; text-decoration:underline;"/> Login to comment</p>
+
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</h:form>
+	
+</composite:implementation>
+
+</html>

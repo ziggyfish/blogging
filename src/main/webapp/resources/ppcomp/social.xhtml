@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<composite:interface>
+
+	<composite:attribute name="url" required="true" />
+	<composite:attribute name="title" required="true" />
+	
+</composite:interface>
+<composite:implementation>
+
+	<div class="fb-like" data-href="#{cc.attrs.url}" data-layout="button_count" data-action="recommend" data-show-faces="true" data-share="true"></div>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-url="#{cc.attrs.url}" data-text="#{cc.attrs.title}" data-via="ZanettiCartoons">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+</composite:implementation>
+
+</html>

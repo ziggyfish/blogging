@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<composite:interface>
+
+	<composite:attribute name="articleList" required="true" />
+</composite:interface>
+<composite:implementation>
+	<div id="main-article-right">
+	
+	<h:outputText value="#{offerController.getOfferHTML(336, 280, 'main_articles')}" escape="false"/>
+</div>
+	<div id="feature-main">
+		<c:forEach items="#{cc.attrs.articleList}" var="item" varStatus="status">
+		<div class="#{status.first ? 'main-story' : 'sub-story'}">
+			<a href="#{postController.getPostURL(item)}">
+				<c:choose>
+					<c:when test="${status.first}">
+						<div class="main-story-shade">
+							<ppc:article-image fileType="#{item.mediaFile[0].fileType}" fileID="#{item.mediaFile[0].fileID}" width="640" height="280"/>
+						</div>
+					</c:when>
+					<c:otherwise>
+						
+						<ppc:article-image fileType="#{item.mediaFile[0].fileType}" fileID="#{item.mediaFile[0].fileID}" width="240" height="225"/>
+					</c:otherwise>
+
+				</c:choose>
+				<div class="#{status.first ? 'main-text' : 'sub-text'}">
+					<c:choose>
+					<c:when test="${status.first}">
+					<h1>${item.title}</h1>
+					<div class="main-excerpt">
+						<h:outputText value="#{item.abs}" escape="false" />
+					</div>
+					</c:when>
+					<c:otherwise>
+					<h2>${item.title}</h2>
+					<div class="sub-excerpt"><h:outputText value="#{item.abs}" escape="false" />
+					</div>
+					</c:otherwise>
+					</c:choose>
+					
+				</div>
+				
+			</a>
+			
+		</div>
+		</c:forEach>
+	</div>
+	
+</composite:implementation>
+
+</html>

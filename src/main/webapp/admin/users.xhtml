@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/admin.xhtml">
+	<ui:param name="pageWidth" value="650px" />
+	<ui:param name="pageTitle" value="User Posts" />
+	<ui:param name="pageHeader" value="User Posts" />
+	<ui:define name="content">
+		<h:form id="userForm">
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton id="userAdd" value="Add"
+						onclick="PF('dlgUser').show()" update=":userForm:userList">
+					</p:commandButton>
+					<p:commandButton actionListener="#{userController.delete}"
+						id="deleteUser" value="Delete" update=":userForm:userList">
+						
+					</p:commandButton>
+				</p:toolbarGroup>
+			</p:toolbar>
+			<p:dataTable var="user" value="#{userController.list}" id="userList"
+				paginator="true" rows="50" editable="true" sortMode="multiple"
+				paginatorPosition="bottom" rowKey="#{user.userID}"
+				selection="#{userController.selected}">
+				<p:column selectionMode="multiple" style="width:2%" />
+
+				<p:column headerText="Name" filterBy="#{user.name}"
+					sortBy="#{user.name}">
+					<h:outputText value="#{user.name}" />
+				</p:column>
+				
+				<p:column style="width:6%">
+					<p:commandButton update=":formUserAdd:panelStory"
+						actionListener="#{userController.onEdit(user)}"
+						icon="ui-icon-pencil"></p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+	<ui:define name="pageDialogs">
+		<h:form id="formUserAdd">
+			<p:dialog header="Add User" widgetVar="dlgUser" resizable="false"
+				modal="true">
+				<p:ajax event="close" update=":formUserAdd"
+					listener="#{userController.clear}" />
+
+				<p:panel id="panelStory">
+
+					<h:panelGrid columns="3" style="margin-bottom:10px">
+
+
+						<h:outputLabel for="name" value="Name:" />
+						<p:inputText id="name" value="#{userController.current.name}" require="true" />
+						<p:message for="name" display="text" />
+
+						<h:outputLabel for="subtitle" value="Username:" />
+						<p:inputText id="subtitle"
+							value="#{userController.current.username}" required="true" />
+						<p:message for="subtitle" display="text" />
+
+						<h:outputLabel for="password" value="Password:" />
+						<p:password id="password"
+							value="#{userController.current.password}" required="true"
+							feedback="true" />
+						<p:message for="password" display="text" />
+
+						<h:outputLabel for="caption" value="Caption:" />
+						<p:inputTextarea id="caption"
+							value="#{userController.current.caption}" rows="6" cols="33"/>
+						<p:message for="caption" display="text" />
+
+
+					</h:panelGrid>
+				</p:panel>
+
+				<p:commandButton id="submitButton" value="Submit"
+					actionListener="#{userController.add}"
+					update="panelStory :userForm:userList">
+
+				</p:commandButton>
+
+
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

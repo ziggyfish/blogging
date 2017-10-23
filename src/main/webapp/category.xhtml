@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/homepage.xhtml">
+	<ui:param name="pageTitle" value="#{categoryController.categoryName(param.categoryID)}" />
+	<ui:param name="pageURL" value="#{categoryController.getCategoryURL(param.categoryID)}" />
+	<ui:param name="pageType" value="website" />
+	<ui:param name="pageImage" value="http://zanettisview.com#{resource['zanettisview:images/zanettisview.gif']}" />
+	<ui:define name="content">
+		
+		<c:forEach items="#{postClientController.getPostByCategory(param.categoryID)}" var="item">
+			<ppc:post item="#{item}" />
+		</c:forEach>
+		
+		<c:if test="#{postClientController.getIsMoreCateogryStories(param.categoryID)}"><p style="text-align: center;"><h:link style="color: #bb0000; font-weight: bold" outcome="index" value="More Stories">
+		<f:param name="first" value="#{postClientController.next}"></f:param></h:link></p>
+		</c:if>
+	</ui:define>
+	<ui:define name="sidebar">
+			<div class="sub-article-heading">TRENDING STORIES</div>
+			<c:forEach items="#{postClientController.trendingPosts}" var="item">
+				<ppc:sub-article item="#{item}" showcategory="true" ></ppc:sub-article>
+			</c:forEach>
+			<div style="margin-top: 10px">
+			<h:outputText value="#{offerController.getOfferHTML('category_sidebar')}" escape="false"/>
+</div>
+	</ui:define>
+	
+	<ui:define name="abovecontent">
+		<h1 style="padding: 10px; margin: 0px; color: #bb0000">#{categoryController.categoryName(param.categoryID)}</h1>
+		<ppc:main-articles articleList="#{postClientController.getMainPostByCategory(param.categoryID)}"></ppc:main-articles>
+		
+	</ui:define>
+</ui:composition>
+</html>

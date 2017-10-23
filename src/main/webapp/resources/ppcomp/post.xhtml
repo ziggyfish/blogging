@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<composite:interface>
+
+	<composite:attribute name="item" required="true" />
+	<composite:attribute name="showcategory" required="true" />
+	
+</composite:interface>
+<composite:implementation>
+	
+	<div class="article">
+		
+		<a href="${postController.getPostURL(cc.attrs.item)}">
+		<div class="picture">
+		<ppc:article-image fileType="#{cc.attrs.item.mediaFile[0].fileType}" fileID="#{cc.attrs.item.mediaFile[0].fileID}" width="250" height="152"/></div>
+		<div class="description">
+			<c:if test="#{cc.attrs.showcategory and not empty cc.attrs.item.category.name}">
+				<span class="category-comment"><h:outputText value="#{cc.attrs.item.category.name}" /></span>
+			</c:if>
+			<h3>
+			<h:outputText value="#{cc.attrs.item.title}" /></h3>
+			<ppc:byline author="#{cc.attrs.item.author.name}" created="#{cc.attrs.item.created}"/>
+			<div class="story-text"><h:outputText value="#{cc.attrs.item.abs}" escape="false" />
+			</div>
+		</div>
+		
+		</a>
+		
+	</div>
+	
+</composite:implementation>
+
+</html>

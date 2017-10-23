@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp">
+
+<composite:interface>
+
+	<composite:attribute name="question" required="true" />
+	<composite:attribute name="heading" required="true" />
+
+</composite:interface>
+<composite:implementation>
+	<h:form>
+	<p:outputPanel autoUpdate="true" styleClass="poll">
+		<c:if test="#{not empty cc.attrs.heading}">
+			<div class="sub-article-heading">#{cc.attrs.heading}</div>
+		</c:if>
+		
+		<div style="padding: 5px">
+		<center>
+			<p>
+				<b><a
+					href="#{questionController.getQuestionURL(cc.attrs.question)}"><h:outputText
+							value="#{cc.attrs.question.question}" /></a></b>
+
+			</p>
+		</center>
+		
+		<c:choose>
+			<c:when test="#{questionController.hasAnswered(cc.attrs.question)}">
+				<ppc:poll-result question="#{cc.attrs.question}" heading="#{cc.attrs.heading}"></ppc:poll-result>
+			</c:when>
+			<c:otherwise>
+				<ppc:poll-question question="#{cc.attrs.question}" heading="#{cc.attrs.heading}"></ppc:poll-question>
+			</c:otherwise>
+		</c:choose>
+		</div>
+	</p:outputPanel>
+	</h:form>
+
+</composite:implementation>
+
+</html>

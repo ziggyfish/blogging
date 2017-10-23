@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/singlecolumn.xhtml">
+	<ui:param name="pageTitle"
+		value="#{cartoonSingleController.cartoon.caption}" />
+	<ui:param name="pageURL"
+		value="http://zanettisview.com${cartoonClientController.getCartoonURL(cartoonSingleController.cartoon)}" />
+	<ui:param name="pageType" value="article" />
+	<ui:param name="pageDescription"
+		value="#{cartoonSingleController.cartoon.caption}" />
+	<ui:param name="pageImage"
+		value="http://zanettisview.com/rest/images/#{cartoonSingleController.cartoon.mediaFile.fileID}" />
+	<ui:param name="pageClass" value="cartoon-page" />
+	<ui:define name="content">
+
+		<br />
+
+		<div id="cartoon">
+
+			<h1>#{cartoonSingleController.cartoon.caption}</h1>
+			<ppc:byline author="Paul Zanetti"
+				created="#{cartoonSingleController.cartoon.created}" />
+			<center>
+			<ppc:image
+				imageId="#{cartoonSingleController.cartoon.mediaFile.fileID}"
+				width="800"></ppc:image>
+			</center>
+			<hr />
+			<ppc:social
+				url="http://zanettisview.com${cartoonClientController.getCartoonURL(cartoonSingleController.cartoon)}"
+				title="#{cartoonSingleController.cartoon.caption}" />
+			<hr />
+			<h:outputText value="#{offerController.getOfferHTML('under_cartoon')}" escape="false"/>
+
+			<hr />
+			<div class="fb-comments"
+				data-href="http://zanettisview.com${cartoonClientController.getCartoonURL(cartoonSingleController.cartoon)}"
+				data-width="640	" data-numposts="5"></div>
+		</div>
+	</ui:define>
+	<ui:define name="sidebar">
+		<h:outputText value="#{offerController.getOfferHTML('cartoon_sidebar')}" escape="false"/>
+	</ui:define>
+</ui:composition>
+</html>

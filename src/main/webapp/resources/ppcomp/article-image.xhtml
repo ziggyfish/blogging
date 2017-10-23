@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp">
+
+<composite:interface>
+
+	<composite:attribute name="fileType" required="true" />
+	<composite:attribute name="fileID" required="true" />
+	<composite:attribute name="width" required="true" />
+	<composite:attribute name="height" required="true" />
+	<composite:attribute name="controls" />
+
+</composite:interface>
+<composite:implementation>
+	<p:panel id="image" rendered="${fn:startsWith(cc.attrs.fileType, 'image')}">
+		<ppc:image imageId="#{cc.attrs.fileID}">
+			<c:if test="#{not empty cc.attrs.width}">
+				<f:attribute name="width" value="#{cc.attrs.width}" />
+			</c:if>
+			<c:if test="#{not empty cc.attrs.height}">
+				<f:attribute name="height" value="#{cc.attrs.height}" />
+			</c:if>
+		</ppc:image>
+	</p:panel>
+	<p:panel id="video" rendered="${fn:startsWith(cc.attrs.fileType, 'video')}">
+		<c:choose>
+			<c:when test="#{not empty cc.attrs.controls}">
+		
+				<c:choose>
+					<c:when test="#{not empty cc.attrs.width and not empty cc.attrs.height}">
+						<video class="article-video"  src="#{request.contextPath}/rest/images/#{cc.attrs.fileID}" controls="controls" width="#{cc.attrs.width}" height="#{cc.attrs.height}"/>
+					</c:when>
+					<c:when test="#{not empty cc.attrs.width}">
+						<video class="article-video"  src="#{request.contextPath}/rest/images/#{cc.attrs.fileID}" controls="controls" width="#{cc.attrs.width}"/>
+					</c:when>
+					<c:when test="#{not empty cc.attrs.width}">
+						<video class="article-video"  src="#{request.contextPath}/rest/images/#{cc.attrs.fileID}" controls="controls" height="#{cc.attrs.height}"/>
+					</c:when>
+					<c:otherwise>
+						<video class="article-video" src="#{request.contextPath}/rest/images/#{cc.attrs.fileID}" controls="controls" />
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:otherwise>
+				<c:choose>
+					<c:when test="#{not empty cc.attrs.width and not empty cc.attrs.height}">
+						<video class="article-video"  src="#{request.contextPath}/rest/images/#{cc.attrs.fileID}" width="#{cc.attrs.width}" height="#{cc.attrs.height}"/>
+					</c:when>
+					<c:when test="#{not empty cc.attrs.width}">
+						<video class="article-video"  src="#{request.contextPath}/rest/images/#{cc.attrs.fileID}" width="#{cc.attrs.width}"/>
+					</c:when>
+					<c:when test="#{not empty cc.attrs.width}">
+						<video class="article-video"  src="#{request.contextPath}/rest/images/#{cc.attrs.fileID}" height="#{cc.attrs.height}"/>
+					</c:when>
+					<c:otherwise>
+						<video class="article-video" src="#{request.contextPath}/rest/images/#{cc.attrs.fileID}"/>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
+		
+	</p:panel>
+
+</composite:implementation>
+
+</html>
+

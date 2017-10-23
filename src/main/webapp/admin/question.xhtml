@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/admin.xhtml">
+	<ui:param name="pageWidth" value="650px" />
+	<ui:param name="pageTitle" value="User Posts" />
+	<ui:param name="pageHeader" value="User Posts" />
+	<ui:define name="content">
+		<h:form id="questionForm">
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton id="questionAdd" value="Add"
+						onclick="PF('dlgQuestion').show()" update=":questionForm:questionList">
+					</p:commandButton>
+					<p:commandButton actionListener="#{questionController.delete}"
+						id="deleteQuestion" value="Delete" update=":questionForm:questionList">
+						
+					</p:commandButton>
+				</p:toolbarGroup>
+			</p:toolbar>
+			<p:dataTable var="question" value="#{questionController.list}" id="questionList"
+				paginator="true" rows="50" editable="true" sortMode="multiple"
+				paginatorPosition="bottom" rowKey="#{question.questionID}"
+				selection="#{questionController.selected}" >
+				<p:ajax event="rowEdit" listener="#{questionController.onRowEdit}" />
+				<p:column headerText="Created" width="150">
+					
+					<h:outputText value="#{question.created}" />
+				</p:column>
+
+				<p:column headerText="Question">
+					<p:cellEditor>
+						<f:facet name="output"><h:outputText value="#{question.question}" /></f:facet>
+						<f:facet name="input"><p:inputText value="#{question.question}" /></f:facet>
+					</p:cellEditor>
+					
+				</p:column>
+				<p:column style="width:32px">
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+	<ui:define name="pageDialogs">
+		<h:form id="formQuestion">
+			<p:dialog header="Add Dialog" widgetVar="dlgQuestion" resizable="false" modal="true" width="400">
+				<p:panel id="panelQuestion">
+					<p:panelGrid columns="2" style="margin-bottom:10px">
+						<h:outputLabel for="question" value="Question ( e.g Who do think is better than Bill Shorten as opposition leader):" />
+						<p:inputText id="question" value="#{questionController.question}"
+							required="true" /> 
+						<h:outputLabel for="Answers" value="Answers (comma seperated. e.g Tanya Plibersek, Chris Bowen, Tony Burke, Humphrey B Bear):" />
+						<p:inputText id="Answers" value="#{questionController.answer}"
+							required="true" />
+					</p:panelGrid>
+					<p:commandButton id="submitButton" value="Submit" actionListener="#{questionController.addQuestion}" update="panelQuestion :questionForm:questionList" />
+				</p:panel>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

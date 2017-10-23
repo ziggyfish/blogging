@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/singlecolumn.xhtml">
+	<ui:param name="pageTitle" value="Contact US" />
+	<ui:param name="pageURL" value="http://zanettisview.com/contact.jsf" />
+	<ui:define name="content">
+		<style>
+		
+		</style>
+		<h:form id="form">
+		
+		<h1 style="padding: 10px; margin: 0px; color: #bb0000">Contact Us</h1>
+		<p:messages id="messages" showDetail="false" display="text" autoUpdate="true" />
+		<div id="contactForm">
+		
+		<h:panelGrid rendered="#{not contactController.hasContacted}" columns="3" columnClasses="label,value">
+			<p:outputLabel for="name" value="Name:" />
+			<p:inputText id="name" value="#{contactController.name}" required="true"></p:inputText>
+			<p:message for="name" display="tooltip" />
+			
+			<p:outputLabel for="email" value="Email:" />
+			<p:inputText id="email" value="#{contactController.email}" required="true">
+			 <f:validateRegex
+			pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></p:inputText>
+			<p:message for="email" display="tooltip" />
+			
+			<p:outputLabel for="subject" value="Subject:" />
+			<p:inputText id="subject" value="#{contactController.subject}" required="true"></p:inputText>
+			<p:message for="subject" display="tooltip" />
+			
+			<p:outputLabel for="message" value="Message:" />
+			<p:inputTextarea id="message" value="#{contactController.message}" required="true"></p:inputTextarea>
+			<p:message for="message" display="tooltip" />
+		</h:panelGrid>
+			<center>
+				<p:commandButton actionListener="#{contactController.send()}" value="Send" update="form" rendered="#{not contactController.hasContacted}"></p:commandButton>
+				<h:outputText rendered="#{contactController.hasContacted}" value="Thanks for your message"/>
+			</center>
+			
+		</div>
+		</h:form>
+		
+		
+	</ui:define>
+	<ui:define name="sidebar">
+			
+	</ui:define>
+</ui:composition>
+</html>

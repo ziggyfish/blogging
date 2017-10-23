@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<composite:interface>
+
+	<composite:attribute name="headerid" required="true" />
+</composite:interface>
+<composite:implementation>
+	<div id="#{cc.attrs.headerid}" class="container">
+			<!-- Burger Button -->
+			<button id="cpBtn">
+				<div></div>
+				<div></div>
+				<div></div>
+			</button>
+			<div id="social-media-icons">
+				<a href="https://www.facebook.com/Paul-Zanetti-Cartoonist-521460511228671" target="_blank"><h:graphicImage library="zanettisview" name="images/FB-f-Logo__blue_50.png" height="32" width="32"/></a>
+				<a href="https://twitter.com/ZanettiCartoons" target="_blank"><h:graphicImage style="background-color: #55acee" library="zanettisview" name="images/TwitterLogo_white.png" height="32" width="32"/></a>
+			</div>
+			<div id="header-logo">
+				<h:link outcome="index"><h:graphicImage library="zanettisview" name="images/zanettisview.gif" height="105"/></h:link>
+			</div>
+		</div>
+</composite:implementation>
+
+</html>

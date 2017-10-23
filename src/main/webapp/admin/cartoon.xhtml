@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/admin.xhtml">
+	<ui:param name="pageWidth" value="650px" />
+	<ui:param name="pageTitle" value="Create New iFanz Account" />
+	<ui:param name="pageHeader" value="Account Settings" />
+	<ui:define name="content">
+		<h:form enctype="multipart/form-data">
+
+		<p:fileUpload fileUploadListener="#{cartoonController.upload}"
+			mode="advanced" dragDropSupport="true" update="postFile" auto="true"
+			multiple="true">
+			
+		</p:fileUpload>
+		<p:dataGrid id="postFile" var="files" columns="6" layout="grid"
+			value="#{cartoonController.list}"  rows="24" paginator="true"  >
+			<p:panel style="text-align:center">
+			<p:inplace editor="true" emptyLabel="Enter Date">
+				<p:ajax event="save" listener="#{cartoonController.save(files)}" />
+				<p:calendar id="popup" value="#{files.created}" timeZone="UTC"/>
+			</p:inplace>
+			<br />
+			<p:inplace editor="true" emptyLabel="Enter Caption Here">
+				<p:ajax event="save" listener="#{cartoonController.save(files)}" />
+				<p:inputText value="#{files.caption}"></p:inputText>
+			</p:inplace>
+			<br />
+				<img src="#{request.contextPath}/rest/images/#{files.mediaFile.fileID}" style="height: 150px"/><br />
+				
+				<p:commandButton id="delete" value="Delete"
+					actionListener="#{cartoonController.deleteCartoon(files)}" update="postFile">
+				</p:commandButton>
+			</p:panel>
+			
+			
+		</p:dataGrid>
+	</h:form>
+	</ui:define>
+</ui:composition>
+</html>

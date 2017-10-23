@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<composite:interface>
+
+	<composite:attribute name="question" required="true" />
+	<composite:attribute name="heading" required="true" />
+
+</composite:interface>
+<composite:implementation>
+	<p:outputPanel autoUpdate="true">
+		<ui:repeat value="#{questionController.getAnswers(cc.attrs.question)}" var="q">
+			<div>
+				<label style="font-size: 0.9em; float: right;"><h:outputText value="#{questionController.numberForResponse(q) / questionController.numberOfAnswers(cc.attrs.question)}" maxFractionDigits="2">
+					<f:convertNumber type="percent" />
+				</h:outputText></label>
+				
+				<p:commandLink value="#{q.answer}"  disabled="true" />
+				<br />
+				<meter value="#{questionController.numberForResponse(q)}" max="#{questionController.numberOfAnswers(cc.attrs.question)}" style="width: 100%"></meter>
+				<br />
+			</div>
+		</ui:repeat>
+	</p:outputPanel>
+
+</composite:implementation>
+
+</html>

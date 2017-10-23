@@ -1,0 +1,119 @@
+.container {
+	width: 1000px;
+	margin: auto;
+}
+.commentsWrapper{
+	padding: 10px 0 10px 0;
+	border-bottom: 1px solid grey;
+}
+.comment-image{
+	display: inline-block;
+}
+.comment-text{
+	display: inline-block;
+	padding: 0 10px 0 10px;
+	vertical-align: top;
+	width: 560px;
+}
+.commentDescription{
+	font-size: 15px;
+}
+.commentAuthor{
+	font-size: 20px;
+	color: #bb0000;
+}
+#nav{
+	display:block;
+}
+#nav-mobile {
+	display: none;
+}
+.toggle-nav{
+	display:none;
+}
+#mobile-menu-bar{
+	display:none;	
+}
+#cpBtn{
+	display:none;
+}
+
+body {
+	background-color: white;
+}
+
+#bannerAdd {
+	width: 690px;
+	float: right;
+}
+
+.article {
+	width: 630px;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	min-height: 156px;
+}
+
+.article .description {
+	margin-left: 256px;
+}
+
+.article .picture {
+	float: left;
+}
+
+#main #left {
+	width: 640px;
+	padding-left: 10px;
+	
+}
+#main #right {
+	width: 333px;
+	float: right;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+#main-article-right {
+	float: right; 
+	width: 346px;
+}
+#social-media-icons{
+	float: right;
+	padding-top: 100px;
+}
+#contactForm{
+	width: 500px;
+	margin: auto;
+}
+
+
+
+
+
+
+
+
+.ui-dialog{
+	display: block;
+}
+#loginMenu{
+	position: absolute;
+	/*z-index: 1000;*/
+	/*right: 125px;*/
+	width: 1000px;
+	
+	top: 0px;
+	/*vertical-align: middle;*/
+	margin-top: 35px;
+	/*right: 0px;*/
+	text-align: right;
+}
+#loginContainer{
+	width:1000px;
+	margin: 0 auto;	
+}
+#editor{
+	width: 100%;
+}
+

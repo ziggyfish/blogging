@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<composite:interface>
+</composite:interface>
+<composite:implementation>
+	<h:form id="newsletter">
+	<div class="sub-article-heading" style="margin-top: 10px">Subscribe to our Newsletter</div>
+	<div style="text-align: center">
+	<p>
+		<h:outputText value="Keep up to date with the latest news" rendered="#{not newsletterController.hasSubscribed}" />
+		<h:outputText value="Thanks for subscribing" rendered="#{newsletterController.hasSubscribed}" />
+	</p>
+	<p:inputText rendered="#{not newsletterController.hasSubscribed}" id="email" value="#{newsletterController.email}"></p:inputText>
+	<p:watermark for="email" value="Email Address" />
+	
+	<br />
+	<br />
+	<p:commandButton rendered="#{not newsletterController.hasSubscribed}"  actionListener="#{newsletterController.add()}" value="Subscribe" update="newsletter"/>
+	
+	
+	
+	</div>
+	</h:form>
+</composite:implementation>
+
+</html>

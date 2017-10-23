@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<composite:interface>
+
+	<composite:attribute name="item" required="true" />
+	<composite:attribute name="showcategory" required="true" />
+</composite:interface>
+<composite:implementation>
+	<div id="loginMenu">
+	<h:form id="loginPanel">
+		<p:fragment id="loginButton">
+		<c:choose>
+			<c:when test="#{activeCommentorController.isLoggedIn}">
+				User : ${activeCommentorController.commentorName} | <p:commandLink actionListener="#{activeCommentorController.doLogout}" update="loginPanel">Logout</p:commandLink>
+			</c:when>
+			<c:otherwise>
+				<p:commandLink onclick="PF('dlLogin').show();">Login </p:commandLink> | <p:commandLink onclick="PF('dlRegister').show();">Register</p:commandLink>
+			</c:otherwise>
+		</c:choose>
+		</p:fragment>
+	</h:form>
+	</div>
+	<h:form id="loginDialog">
+		<p:dialog header="Login" widgetVar="dlLogin" modal="true">
+
+    		<h:panelGrid columns="2" cellpadding="5">
+    			<p:outputLabel for="username" value="Username"></p:outputLabel>
+    			<p:inputText id="username" value="#{activeCommentorController.username}" required="true" />
+    			<p:outputLabel for="password" value="Password"></p:outputLabel>
+    			<p:password id="password" value="#{activeCommentorController.password}" required="true" />
+
+    			<f:facet name="footer">
+    			<div style="float: right; margin-right: 20px"><p:commandLink onclick="PF('dlForgotPassword').show();">Forgot Password?</p:commandLink></div>
+    			<p:commandButton actionListener="#{activeCommentorController.doLogin()}" value="Login" update=":#{cc.clientId}:loginPanel"/>
+    			</f:facet>
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+	<h:form id="registerDialog">
+		<p:dialog header="Register" widgetVar="dlRegister" modal="true">
+		<p:messages id="msgs" />
+    		<p:panelGrid columns="2">
+    			<p:outputLabel for="usernameR" value="Username"></p:outputLabel>
+    			<p:inputText id="usernameR" value="#{activeCommentorController.username}" required="true" />
+    			<p:outputLabel for="emailR" value="Email"></p:outputLabel>
+    			<p:inputText id="emailR" value="#{activeCommentorController.email}" required="true" validatorMessage="Invalid email format">
+    			</p:inputText>
+    			<p:outputLabel for="passwordR" value="Password"></p:outputLabel>
+    			<p:password id="passwordR" value="#{activeCommentorController.password}" required="true">
+
+    			</p:password>
+    		</p:panelGrid>
+    			<br />
+
+    			<div style="text-align: center">
+    			<p:commandButton actionListener="#{activeCommentorController.doRegsiter()}" value="Register" update=":#{cc.clientId}:loginPanel  msgs"/>
+    			</div>
+		</p:dialog> 
+	</h:form>
+	<h:form id="forgetPassword">
+		<p:dialog header="Forgot Password" widgetVar="dlForgotPassword" modal="true">
+			<h:panelGrid columns="2" cellpadding="5">
+    			<p:outputLabel for="Email" value="Email Address"></p:outputLabel>
+    			<p:inputText id="Email" value="#{activeCommentorController.email}" />    		
+    			<f:facet name="footer">
+    				<p:commandButton actionListener="#{activeCommentorController.forgotPassword()}" value="Retrieve" update=":#{cc.clientId}:loginPanel"/>
+    			</f:facet>
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</composite:implementation>
+
+</html>

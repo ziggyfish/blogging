@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:mycomp="http://java.sun.com/jsf/composite/mycomp"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event type="preRenderView"
+		listener="#{filePostUpload.init(param.id)}" />
+</f:metadata>
+<h:head>
+	<title>Select template</title>
+	<style>
+.ui-autocomplete-panel {
+	max-height: 300px;
+	overflow: auto;
+}
+
+body {
+	line-height: 140%;
+}
+
+.ui-widget {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.95em;
+}
+
+.ui-widget .ui-widget {
+	font-size: 0.95em;
+}
+
+.ui-widget input,.ui-widget select,.ui-widget textarea,.ui-widget button
+	{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 0.95em;
+}
+
+.ui-helper-hidden,.ui-overlay-hidden {
+	display: none;
+}
+
+.ui-overlaypanel {
+	max-width: 80% !important;
+	white-space: normal;
+}
+
+tr.ui-widget-content:hover {
+	background-color: #eee;
+}
+
+.label {
+	font-weight: bold;
+}
+
+.ui-autocomplete .ui-autocomplete-dropdown {
+	position: relative;
+}
+
+#nav {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+	text-align: center;
+}
+
+#nav li {
+	padding-right: 100px;
+	display: inline;
+}
+</style>
+</h:head>
+
+<h:body>
+	<h:form enctype="multipart/form-data">
+
+		<p:fileUpload fileUploadListener="#{filePostUpload.upload}"
+			mode="advanced" dragDropSupport="true" update="postFile" auto="true"
+			multiple="true">
+			<f:attribute name="loan" value="#{loan}" />
+		</p:fileUpload>
+		<p:dataGrid id="postFile" var="files" columns="5" layout="grid"
+			value="#{filePostUpload.postFileList}">
+			<p:panel header="#{files.fileName}" style="text-align:center">
+				<p:panel id="image" rendered="${fn:startsWith(files.fileType, 'image')}">
+					<img src="#{request.contextPath}/rest/images/#{files.fileID}" style="height: 300px"/><br />
+				</p:panel>
+				<p:panel id="video" rendered="${fn:startsWith(files.fileType, 'video')}">
+					<video src="#{request.contextPath}/rest/images/#{files.fileID}" controls="controls" height="300px"/>
+				</p:panel>
+				
+				
+				<p:commandButton id="delete" value="Delete"
+						actionListener="#{filePostUpload.delete(files)}" update="postFile">
+					</p:commandButton>
+			</p:panel>
+			
+			
+		</p:dataGrid>
+		<input type="hidden" id="id" name="id" value="#{param.id}"/>
+	</h:form>
+</h:body>
+
+</html>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+
+	<composite:attribute name="comments" required="true" />
+</composite:interface>
+<composite:implementation>
+	<p:outputPanel autoUpdate="true">
+	<ppc:comment-create />
+	<ui:repeat value="#{cc.attrs.comments}" var="comment">
+	<div class="commentsWrapper">
+		<div class="comment-image">
+			<p:graphicImage value="http://www.gravatar.com/avatar/#{helperController.getGravatarURL((comment.author.email))}?size=40"/>
+		</div>
+		<div class="comment-text">
+		<h:outputText class="commentAuthor" value="#{comment.author.username}" />
+		<br/>
+		<h:outputText class="commentDescription" value="#{comment.comment}" escape="false" />
+		<br/>
+		<!-- See http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html for desired pattern -->
+		<h:outputText value="#{comment.created}" style="font-size: .7em; float:right; margin-bottom: 0; color: #999999;">
+		<!-- <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />  -->
+		<f:convertDateTime pattern="EEE, MMM d, yyyy h:mm a" />
+		</h:outputText>
+		</div>
+		
+		<c:if test="#{commentController.hasSubComments(comment.commentID)}">
+	Read more
+	<ui:repeat
+				value="#{commentController.getSubComments(comment.commentID)}"
+				var="subcomment">
+				<h:outputText value="#{subcomment.created}">
+					<!-- See http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html for desired pattern -->
+					<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+				</h:outputText>
+				<h:outputText value="#{subcomment.author.username}" />
+			</ui:repeat>
+		</c:if>
+		
+		</div>
+	</ui:repeat>
+	</p:outputPanel>
+	
+</composite:implementation>
+
+</html>

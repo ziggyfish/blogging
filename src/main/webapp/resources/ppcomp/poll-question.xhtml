@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<composite:interface>
+
+	<composite:attribute name="question" required="true" />
+	<composite:attribute name="heading" required="true" />
+
+</composite:interface>
+<composite:implementation>
+	
+	<p:selectOneRadio id="pollAnswers" styleClass="pollq" value="#{questionController.answer}" layout="custom">
+		<f:selectItems value="#{questionController.getAnswers(cc.attrs.question)}" var="c" itemLabel="#{c.answer}" itemValue="#{c.answerID}"/>
+	</p:selectOneRadio>
+	<div class="poll-options">
+		<ui:repeat value="#{questionController.getAnswers(cc.attrs.question)}" var="q" varStatus="status">
+		<div class="poll-opt">
+			<span class="poll-radio"><p:radioButton for=":#{cc.clientId}:pollAnswers" itemIndex="#{status.index}"/></span>
+			<span class="poll-label"><h:outputText value="#{q.answer}" /></span>
+		</div>
+		</ui:repeat>
+	</div>
+	<div><div style="float: right"><p:commandLink actionListener="#{questionController.showResult(cc.attrs.question)}">View Result</p:commandLink></div>
+	<p:commandButton actionListener="#{questionController.submitAnswerNew()}" value="Vote Now"></p:commandButton>
+	</div>
+
+</composite:implementation>
+
+</html>

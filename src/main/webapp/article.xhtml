@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/homepage.xhtml">
+	<ui:param name="pageTitle" value="#{postSingleController.post.title}" />
+	<ui:param name="pageURL"
+		value="${postController.getPostURL(postSingleController.post)}" />
+
+	<ui:param name="pageType" value="article" />
+	<ui:param name="pageDescription"
+		value="#{helperController.htmlToText(postSingleController.post.abs)}" />
+	<ui:param name="pageImage"
+		value="http://zanettisview.com/rest/images/#{postSingleController.post.mediaFile[0].fileID}" />
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="postid" value="#{postSingleController.postid}">
+				<f:convertNumber integerOnly="#{true}" />
+			</f:viewParam>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="content">
+		
+
+		<div id="story">
+
+			<h1 style="font-size: 2.5em; margin-bottom: 10px">
+				<h:outputText value="#{postSingleController.post.title}" />
+			</h1>
+			<ppc:byline author="#{postSingleController.post.author.name}"
+				created="#{postSingleController.post.created}" />
+			<ppc:article-image fileType="${postSingleController.post.mediaFile[0].fileType}" fileID="${postSingleController.post.mediaFile[0].fileID}" width="640" controls="true"></ppc:article-image>
+			<hr />
+			<!-- <div style="float: right">
+			Seen By: <h:outputText value="#{counterController.recordVisit(postSingleController.post.postID)}" />
+		</div> -->
+			<ppc:social
+				url="http://zanettisview.com${postController.getPostURL(postSingleController.post)}"
+				title="#{postSingleController.post.title}" />
+
+			<hr />
+			<h:outputText value="#{postSingleController.postContent}" escape="false" />
+			<hr />
+			<div id="bottom-ad">
+				<h:outputText value="#{offerController.getOfferHTML('under_article')}" escape="false"/>
+			</div>
+			<hr />
+			<ppc:social
+				url="http://zanettisview.com${postController.getPostURL(postSingleController.post)}"
+				title="#{postSingleController.post.title}" />
+			<hr />
+		</div>
+		<div id="fbContainer">
+			<c:choose>
+				<c:when test="#{postSingleController.postid gt 1788}">
+				<ppc:comments comments="#{commentController.getComments(postSingleController.postid)}"/>
+				</c:when>
+				<c:otherwise>
+				<div class="fb-comments"
+					data-href="http://zanettisview.com${postController.getPostURL(postSingleController.post)}"
+					data-width="100%" data-numposts="20"></div>
+				</c:otherwise>
+			</c:choose>
+		</div>
+
+	</ui:define>
+	<ui:define name="sidebar">
+
+		<div class="sub-article-heading" style="margin-top: 10px;">TRENDING
+			STORIES</div>
+		<c:forEach items="#{postClientController.trendingPosts}" var="item">
+			<ppc:sub-article item="#{item}" showcategory="true"></ppc:sub-article>
+		</c:forEach>
+		
+		<h:outputText value="#{offerController.getOfferHTML('article_sidebar')}" escape="false"/>
+		<br />
+		<br />
+		
+		<ppc:poll question="#{questionController.currentQuestion}" heading="POLL OF THE DAY"/>
+		
+		
+		
+
+	</ui:define>
+	<ui:define name="abovecontent">
+		<h1 style="padding: 10px; margin: 0px; color: #bb0000">#{postSingleController.post.category.name}</h1>
+	</ui:define>
+</ui:composition>
+</html>

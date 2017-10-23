@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<composite:interface>
+
+	<composite:attribute name="navid" required="true" />
+</composite:interface>
+<composite:implementation>
+	<div id="#{cc.attrs.navid}" class="container">
+
+			<ul>
+				<c:forEach items="#{categoryController.list}" var="item" varStatus="status">
+				<li><a href="#{categoryController.getCategoryURLC(item)}">#{item.name}</a></li>
+				
+				</c:forEach>
+				<li><h:link outcome="cartoons">Cartoons</h:link></li>
+				<li><h:link outcome="polls">Polls</h:link></li>
+				<li><h:link outcome="about">About</h:link></li>
+				<li><h:link outcome="contact">Contact</h:link> </li>
+			</ul>
+	</div>
+</composite:implementation>
+
+</html>

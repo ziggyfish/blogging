@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/admin.xhtml">
+	<ui:param name="pageWidth" value="650px" />
+	<ui:param name="pageTitle" value="Blog Posts" />
+	<ui:param name="pageHeader" value="Blog Posts" />
+	<ui:define name="content">
+		<h:form id="postForm" enctype="multipart/form-data">
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton id="storyPost" value="Add Story"
+						onclick="PF('dlgPost').show()" update="postList">
+					</p:commandButton>
+
+					<p:commandButton actionListener="#{postController.delete}"
+						id="deletepost" value="Delete" update="postList">
+						<p:confirm header="Please confirm"
+							message="Are you sure want to delete the selected items?"
+							icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:dataTable var="post" value="#{postController.list}" id="postList"
+				paginator="true" rows="50" editable="true" sortMode="multiple"
+				paginatorPosition="bottom" rowKey="#{post.postID}"
+				selection="#{postController.selected}" sortField="#{post.created}" sortOrder="descending">
+				<p:column style="width:16px">
+					<p:rowToggler />
+				</p:column>
+				<p:column headerText="Author" filterBy="#{post.author.name}"
+					sortBy="#{post.author.name}">
+					<h:outputText value="#{post.author.name}" />
+				</p:column>
+
+				<p:column headerText="Title" filterBy="#{post.title}"
+					sortBy="#{post.title}">
+					<h:outputText value="#{post.title}" />
+				</p:column>
+				<p:column headerText="When" filterBy="#{post.created}"
+					sortBy="#{post.created}">
+					<h:outputText value="#{post.created}">
+						<f:convertDateTime pattern=" MMMM d, yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Seen By">
+					<h:outputText value="#{counterController.getCurrentVisits(post.postID)}" />
+				</p:column>
+				
+				<p:column headerText="Delete">
+					<p:commandButton actionListener="#{postController.deleteItem(post.postID)}" update="postList" value="Delete"></p:commandButton>
+				</p:column>
+				
+				
+				<p:rowExpansion>
+
+					<p:panelGrid columns="2" columnClasses="label,value">
+						<h:outputLabel for="Author" value="Author:" />
+						<p:inplace editor="true">
+							<p:ajax event="save" listener="#{postController.save(post)}" />
+							<f:facet name="output">
+								<h:outputText value="#{post.author.name}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:autoComplete label="Author" value="#{post.author}"
+									id="CategoryID" completeMethod="#{userController.complete}"
+									var="n" itemLabel="#{n.name}" itemValue="#{n}"
+									converter="#{userConverter}" forceSelection="true"
+									required="true" dropdown="true" />
+							</f:facet>
+						</p:inplace>
+						
+						<h:outputLabel for="Category" value="Category:" />
+						<p:inplace editor="true">
+							<p:ajax event="save" listener="#{postController.save(post)}" />
+							<f:facet name="output">
+								<h:outputText rendered="#{not empty post.category.name}" value="#{post.category.name}" />
+								<h:outputText rendered="#{empty post.category.name}" value="No Category Selected" />
+							</f:facet>
+							<f:facet name="input">
+								<p:autoComplete label="Category" value="#{post.category}"
+									id="NetworkID" completeMethod="#{categoryController.complete}"
+									var="n" itemLabel="#{n.name}" itemValue="#{n}"
+									converter="#{categoryConverter}" forceSelection="true"
+									required="true" dropdown="true" />
+							</f:facet>
+						</p:inplace>
+						
+						<h:outputLabel for="Keywords" value="Keywords:" />
+						<p:inplace editor="true" emptyLabel="No keywords given">
+							<p:ajax event="save" listener="#{postController.save(post)}" />
+							
+								<p:inputText id="Keywords" value="#{post.keywords}" required="true" />
+							
+						</p:inplace>
+						
+						<h:outputLabel for="Genre" value="Genre:" />
+						<p:inplace editor="true" emptyLabel="No genres given">
+							<p:ajax event="save" listener="#{postController.save(post)}" />
+							<f:facet name="output">
+								<h:outputText rendered="#{not empty post.genres}" value="#{post.genres}" />
+								<h:outputText rendered="#{empty post.genres}" value="No Genres given" />
+							</f:facet>
+							<f:facet name="input">
+								<ul><li>The &lt;genres&gt; tag takes one or more of the following values, separated by commas:</li>
+<ul><li><strong>PressRelease</strong> (visible): an official press release.</li>
+<li><strong>Satire</strong> (visible): an article which ridicules its subject for didactic purposes.</li>
+<li><strong>Blog</strong> (visible): any article published on a blog, or in a blog format.</li>
+<li><strong>OpEd</strong>: an opinion-based article which comes specifically from the Op-Ed section of your site.</li>
+<li><strong>Opinion</strong>: any other opinion-based article not appearing on an Op-Ed page, i.e., reviews, interviews, etc.</li>
+<li><strong>UserGenerated</strong>: newsworthy user-generated content which has already gone through a formal editorial review process on your site.</li></ul>
+</ul>
+								<p:inputText id="Genre" value="#{post.genres}" required="true" />
+							</f:facet>
+						</p:inplace>
+						
+						<h:outputLabel for="title" value="Title:" />
+						<p:inplace editor="true" emptyLabel="No title given">
+							<p:ajax event="save" listener="#{postController.save(post)}" />
+							<p:inputText id="title" value="#{post.title}" required="true" />
+						</p:inplace>
+						
+						<h:outputLabel for="Published" value="Published:" />
+						<p:inplace editor="true" emptyLabel="Unpublished">
+							<p:ajax event="save" listener="#{postController.save(post)}" />
+							<f:facet name="output">
+								<h:outputText rendered="#{post.published}" value="Published" />
+								<h:outputText rendered="#{not post.published}" value="Draft" />
+							</f:facet>
+							<p:selectBooleanButton id="value1" value="#{post.published}" onLabel="Published" offLabel="Draft" />
+						</p:inplace>
+						
+						<h:outputLabel for="Subtitle" value="Subtitle:" />
+						<p:inplace editor="true">
+							<p:ajax event="save" listener="#{postController.save(post)}" />
+
+
+							<p:inputText id="subtitle" value="#{post.subtitle}"
+								required="true" />
+						</p:inplace>
+						
+						<h:outputLabel for="Created" value="Created:" />
+						<p:inplace editor="true">
+							<p:ajax event="save" listener="#{postController.save(post)}" />
+							<f:facet name="output">
+							<h:outputText  value="#{post.created}">
+								<f:convertDateTime pattern=" MMMM d, yyyy HH:mm" />
+							</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar id="popup" value="#{post.created}" timeZone="UTC" pattern="dd-MM-yyyy HH:mm" />
+							</f:facet>
+						</p:inplace>
+						<h:outputLabel for="abstract" value="Abstract:" />
+						<p:inplace id="abstract" editor="true"
+							emptyLabel="Enter some text here">
+							<p:ajax event="save" listener="#{postController.save(post)}" />
+							<f:facet name="output">
+								<h:outputText rendered="#{not empty post.abs}" value="#{post.abs}" escape="false" />
+								<h:outputText rendered="#{empty post.abs}" value="Enter some text here" escape="false" />
+							</f:facet>
+							<f:facet name="input">
+								<p:editor id="Abstract" widgetVar="abstractWidget"
+									value="#{post.abs}"></p:editor>
+							</f:facet>
+						</p:inplace>
+						<h:outputLabel for="content" value="Content:" />
+						<p:inplace id="content" editor="true"
+							emptyLabel="Enter some text here">
+
+							<p:ajax event="save" listener="#{postController.save(post)}" />
+							<f:facet name="output">
+								<h:outputText rendered="#{not empty post.content}" value="#{post.content}" escape="false" />
+								<h:outputText rendered="#{empty post.content}" value="Enter some text here" escape="false" />
+							</f:facet>
+							<f:facet name="input">
+								<p:editor widgetVar="contentWidget" value="#{post.content}"></p:editor>
+							</f:facet>
+						</p:inplace>
+
+					</p:panelGrid>
+					
+					<iframe src="#{request.contextPath}/admin/fileUpload.jsf?id=#{post.postID}"  style="width:100%;height:640px;" frameBorder="0"></iframe>
+					
+
+
+				</p:rowExpansion>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+	<ui:define name="pageDialogs">
+		<h:form id="formStoryAdd">
+			<p:dialog header="Add Dialog" widgetVar="dlgPost" resizable="false"
+				modal="true">
+
+				<p:panel id="panelStory">
+
+					<h:panelGrid columns="3" style="margin-bottom:10px">
+						<h:outputLabel for="Author" value="Author:" />
+						<p:autoComplete label="Author"
+							value="#{postController.current.author}" id="NetworkID"
+							completeMethod="#{userController.complete}" var="n"
+							itemLabel="#{n.name}" itemValue="#{n}"
+							converter="#{userConverter}" forceSelection="true"
+							required="true" dropdown="true" />
+						<p:message for="title" display="text" />
+
+						<h:outputLabel for="title" value="Title:" />
+						<p:inputText id="title" value="#{postController.current.title}"
+							required="true" />
+						<p:message for="title" display="text" />
+
+						<h:outputLabel for="subtitle" value="Subtitle:" />
+						<p:inputText id="subtitle"
+							value="#{postController.current.subtitle}" />
+						<p:message for="subtitle" display="text" />
+					</h:panelGrid>
+				</p:panel>
+
+				<p:commandButton id="submitButton" value="Submit"
+					actionListener="#{postController.add}" update="panelStory :postForm:postList">
+
+				</p:commandButton>
+
+
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

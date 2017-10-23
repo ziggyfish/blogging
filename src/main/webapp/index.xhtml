@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/homepage.xhtml">
+	<ui:param name="pageTitle" value="Home" />
+	<ui:param name="metaTitle" value="Zanetti's View" />
+	<ui:param name="pageType" value="website" />
+	<ui:param name="pageDescription" value="Paul Zanetti has always felt a little confined and frustrated at the limitations of the little box within which he draws his daily cartoons – so many stories ripe for the pricking, yet so little space." />
+	<ui:param name="pageImage" value="http://zanettisview.com#{resource['zanettisview:images/zanettisview.gif']}" />
+	
+	<ui:define name="content">
+		
+		<c:forEach items="#{postClientController.posts}" var="item">
+			<ppc:post item="#{item}" showcategory="true" />
+			
+		</c:forEach>
+		
+		<c:if test="#{postClientController.isMoreHomeStories}"><p style="text-align: center;"><h:link style="color: #bb0000; font-weight: bold" outcome="index" value="More Stories">
+		<f:param name="first" value="#{postClientController.next}"></f:param></h:link></p>
+		</c:if>
+	</ui:define>
+	<ui:define name="sidebar">
+			<ppc:cartoon cartoon="#{cartoonController.latestCartoon}" />
+			<div style="margin-top: 10px">
+				<h:outputText value="#{offerController.getOfferHTML(300, 600, 'frontpage_undercartoon')}" escape="false"/>
+			</div>
+			
+			<ppc:poll question="#{questionController.currentQuestion}" heading="POLL OF THE DAY"/>
+			
+			<div style="margin-top: 20px;border-top: 1px solid #ccc">
+				<h:graphicImage library="zanettisview" name="images/twitter.gif" width="100%" />
+				<a class="twitter-timeline" href="https://twitter.com/ZanettiCartoons" data-widget-id="655904049078779904">Tweets by @ZanettiCartoons</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			</div>
+			<ppc:newsletter />
+	
+	
+	</ui:define>
+	<ui:define name="abovecontent">
+		<ppc:main-articles articleList="#{postClientController.mainPostList}"></ppc:main-articles>
+		
+	</ui:define>
+</ui:composition>
+</html>

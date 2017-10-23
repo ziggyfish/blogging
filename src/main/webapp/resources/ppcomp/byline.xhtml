@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<composite:interface>
+
+	<composite:attribute name="author" required="true" />
+	<composite:attribute name="created" required="true" />
+	
+</composite:interface>
+<composite:implementation>
+	<p class="author"><span class="authorName"><h:outputText value="#{cc.attrs.author}" /></span>
+		<h:outputText value="#{cc.attrs.created}">
+			<f:convertDateTime pattern=" EEEE d MMMM yyyy" timezone="UTC"/>
+		</h:outputText></p>
+</composite:implementation>
+
+</html>

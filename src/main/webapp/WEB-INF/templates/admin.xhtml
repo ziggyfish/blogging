@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+	<title>#{pageTitle}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<ui:insert name="pageTitle"></ui:insert>
+	<style>
+	.ui-autocomplete-panel {
+			max-height: 300px;
+			overflow: auto;
+		}
+		body {
+			line-height: 140%;
+		}
+		.ui-widget {
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			font-size: 0.95em;
+		}
+
+		.ui-widget .ui-widget {
+    		font-size: 0.95em;
+		}
+
+		.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    		font-size: 0.95em;
+		}
+		
+		.ui-helper-hidden, .ui-overlay-hidden {
+			display: none;
+		}
+		.ui-overlaypanel {
+			max-width: 80% !important;
+			white-space:normal;
+		}
+		tr.ui-widget-content:hover {
+			background-color: #eee;
+		}
+		
+		.label {
+			font-weight: bold;
+		}
+		.ui-autocomplete .ui-autocomplete-dropdown {
+			position: relative;
+		}
+		#nav {
+			list-style-type: none;
+			padding: 0px;
+    		margin: 0px;
+    		text-align: center;
+		}
+		#nav li {
+			padding-right: 100px;
+			display: inline;
+		}
+		.ui-panel .ui-panel-titlebar-icon {
+			float: left;
+		}
+	.label {
+		width: 100px;
+	}
+	</style>
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+
+		<p:layoutUnit position="north" size="40" gutter="0" resize="false">
+			<ul id="nav">
+				<li><h:link value="Posts" outcome="posts"/></li>
+				<li><h:link value="Authors" outcome="users"/></li>
+				<li><h:link value="Cartoon" outcome="cartoon"/></li>
+				<li><h:link value="Comments" outcome="comments"/></li>
+				<li><h:link value="Web Users" outcome="commentors"/></li>
+				<li><h:link value="Polls" outcome="question"/></li>
+				
+			</ul>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center" gutter="0" resize="false">
+			<ui:insert name="content"></ui:insert>
+		</p:layoutUnit>
+		
+	</p:layout>
+	<p:ajaxStatus
+		style="width:32px;height:32px;position:fixed;right:5px;top:5px" onstart="document.ajaxStart = true" onsuccess="document.ajaxStart = false">
+		<f:facet name="start">
+			<p:graphicImage value="/images/loading.gif" width="32" height="32" />
+		</f:facet>
+
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
+	<ui:insert name="pageDialogs"></ui:insert>
+	
+	
+</h:body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/admin.xhtml">
+	<ui:param name="pageWidth" value="650px" />
+	<ui:param name="pageTitle" value="Comments" />
+	<ui:param name="pageHeader" value="Comments" />
+	<ui:define name="content">
+		<h:form id="userForm">
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton id="categoryAdd" value="Add"
+						onclick="PF('dlgCategory').show()" update=":userForm:catList">
+					</p:commandButton>
+					<p:commandButton actionListener="#{userController.delete}"
+						id="deleteCategory" value="Delete" update=":userForm:catList">
+						
+					</p:commandButton>
+				</p:toolbarGroup>
+			</p:toolbar>
+			<p:dataTable var="category" value="#{categoryController.list}" id="catList"
+				paginator="true" rows="50" editable="true" 
+				paginatorPosition="bottom" rowKey="#{category.categoryID}"
+				selection="#{categoryController.selected}"
+				selectionMode="multiple" >
+				
+				<p:ajax event="rowEdit" listener="#{categoryController.onRowEdit}" />
+				<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+				<p:column headerText="Name" filterBy="#{category.name}">
+					<p:cellEditor>
+						<f:facet name="output"><h:outputText value="#{category.name}" /></f:facet>
+						<f:facet name="input"><p:inputText id="modelInput" value="#{category.name}" style="width:100%"/></f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column style="width:32px">
+					<p:rowEditor />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+	
+	<ui:define name="pageDialogs">
+		<h:form id="formCategoryAdd">
+			<p:dialog header="Add Category" widgetVar="dlgCategory" resizable="false"
+				modal="true">
+				<p:ajax event="close" update=":formCategoryAdd"
+					listener="#{categoryController.clear}" />
+
+				<p:panel id="panelStory">
+
+					<h:panelGrid columns="3" style="margin-bottom:10px">
+
+						<h:outputLabel for="name" value="Name:" />
+						<p:inputText id="name" value="#{categoryController.current.name}"
+							required="true" />
+						<p:message for="name" display="text" />
+					</h:panelGrid>
+				</p:panel>
+
+				<p:commandButton id="submitButton" value="Submit"
+					actionListener="#{categoryController.add}"
+					update="panelStory :userForm:catList">
+
+				</p:commandButton>
+
+
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

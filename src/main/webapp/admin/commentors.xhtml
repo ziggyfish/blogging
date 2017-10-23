@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/admin.xhtml">
+	<ui:param name="pageWidth" value="650px" />
+	<ui:param name="pageTitle" value="Comments" />
+	<ui:param name="pageHeader" value="Comments" />
+	<ui:define name="content">
+		<h:form id="postForm" enctype="multipart/form-data">
+			<p:dataTable var="comment" value="#{commentorController.list}" id="postList"
+				paginator="true" rows="50" editable="true" sortMode="multiple"
+				paginatorPosition="bottom" rowKey="#{comment.commentorID}">
+				<p:column headerText="Username" >
+					<h:outputText value="#{comment.username}" />
+				</p:column>
+				<p:column headerText="Email" >
+					<h:outputText value="#{comment.email}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<composite:interface>
+
+	<composite:attribute name="imageId" required="true" />
+	<composite:attribute name="width" />
+	<composite:attribute name="height" />
+	
+	
+
+</composite:interface>
+<composite:implementation>
+	<c:choose>
+	<c:when test="#{empty cc.attrs.width}">
+		<h:graphicImage class="image" value="/rest/images/#{cc.attrs.imageId}/h#{cc.attrs.height}.png">
+	        <f:attribute name="width" value="#{cc.attrs.width}" />
+	        <f:attribute name="height" value="#{cc.attrs.height}" />
+		</h:graphicImage>
+	</c:when>
+	<c:when test="#{empty cc.attrs.height}">
+		<h:graphicImage class="image" value="/rest/images/#{cc.attrs.imageId}/w#{cc.attrs.width}.png">
+	        <f:attribute name="width" value="#{cc.attrs.width}" />
+	        <f:attribute name="height" value="#{cc.attrs.height}" />
+		</h:graphicImage>
+	</c:when>
+	<c:otherwise>
+		<h:graphicImage class="image" value="/rest/images/#{cc.attrs.imageId}/w#{cc.attrs.width}h#{cc.attrs.height}.png">
+	        <f:attribute name="width" value="#{cc.attrs.width}" />
+	        <f:attribute name="height" value="#{cc.attrs.height}" />
+		</h:graphicImage>
+	</c:otherwise>
+	</c:choose>
+	
+</composite:implementation>
+
+</html>

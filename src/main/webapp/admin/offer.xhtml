@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/admin.xhtml">
+	<ui:param name="pageWidth" value="650px" />
+	<ui:param name="pageTitle" value="User Posts" />
+	<ui:param name="pageHeader" value="User Posts" />
+	<ui:define name="content">
+		<h:form id="offerForm">
+			<p:toolbar>
+				<p:toolbarGroup align="left">
+					<p:commandButton id="userAdd" value="Add"
+						onclick="PF('dlgOffer').show()" update=":offerForm:">
+					</p:commandButton>
+					<p:commandButton actionListener="#{offerController.delete}"
+						id="deleteOffer" value="Delete" update=":offerForm:offerList">
+						
+					</p:commandButton>
+				</p:toolbarGroup>
+			</p:toolbar>
+			<p:dataTable var="offer" value="#{offerController.list}" id="offerList"
+				paginator="true" rows="50" editable="true" sortMode="multiple"
+				paginatorPosition="bottom" rowKey="#{offer.offerID}"
+				selection="#{offerController.selected}">
+				<p:column style="width:16px">
+					<p:rowToggler />
+				</p:column>
+
+				<p:column headerText="Name" filterBy="#{offer.name}"
+					sortBy="#{offer.name}">
+					<h:outputText value="#{offer.name}" />
+				</p:column>
+				
+				<p:rowExpansion>
+					<p:panelGrid columns="2" columnClasses="label,value">
+						<h:outputLabel for="Name" value="Name:" />
+						<p:inplace editor="true" emptyLabel="No name given">
+							<p:ajax event="save" listener="#{offerController.save(offer)}" />
+							<p:inputText id="Name" value="#{offer.name}" required="true" />
+						</p:inplace>
+						
+						<h:outputLabel for="Placement" value="Placement:" />
+						<p:inplace editor="true" emptyLabel="Placement not given">
+							<p:ajax event="save" listener="#{offerController.save(offer)}" />
+							<p:inputText id="Placement" value="#{offer.placement}" />
+						</p:inplace>
+						
+						<h:outputLabel for="Width" value="Width:" />
+						<p:inplace editor="true" emptyLabel="No width given">
+							<p:ajax event="save" listener="#{offerController.save(offer)}" />
+							<p:inputText id="Width" value="#{offer.width}" />
+						</p:inplace>
+						
+						<h:outputLabel for="Height" value="Height:" />
+						<p:inplace editor="true" emptyLabel="No height given">
+							<p:ajax event="save" listener="#{offerController.save(offer)}" />
+							<p:inputText id="Height" value="#{offer.height}" />
+						</p:inplace>
+						
+						<h:outputLabel for="Rotation" value="Rotation:" />
+						<p:inplace editor="true" emptyLabel="No rotation given">
+							<p:ajax event="save" listener="#{offerController.save(offer)}" />
+							<p:inputText id="Rotation" value="#{offer.rotation}" />
+						</p:inplace>
+						
+						<h:outputLabel for="HTML" value="HTML:" />
+						<p:inplace editor="true" emptyLabel="No HTML given">
+							<p:ajax event="save" listener="#{offerController.save(offer)}" />
+							<p:inputTextarea id="HTML" value="#{offer.offerHTML}" />
+						</p:inplace>
+						
+						<h:outputLabel for="Enabled" value="Enabled:" />
+						<p:inplace editor="true" emptyLabel="Disabled">
+							<p:ajax event="save" listener="#{offerController.save(offer)}" />
+							<f:facet name="output">
+								<h:outputText rendered="#{offer.enabled}" value="Enabled" />
+								<h:outputText rendered="#{not offer.enabled}" value="Disabled" />
+							</f:facet>
+							<p:selectBooleanButton id="value1" value="#{offer.enabled}" onLabel="Enabled" offLabel="Disabled" />
+						</p:inplace>
+						
+						
+					</p:panelGrid>
+				</p:rowExpansion>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+	<ui:define name="pageDialogs">
+		<h:form id="formOfferAdd">
+			<p:dialog header="Add Offer" widgetVar="dlgOffer" resizable="false"
+				modal="true">
+				<p:ajax event="close" update=":formOfferAdd"
+					listener="#{offerController.clear}" />
+
+				<p:panel id="panelStory">
+
+					<h:panelGrid columns="3" style="margin-bottom:10px">
+
+						<h:outputLabel for="name" value="Name:" />
+						<p:inputText id="name" value="#{offerController.current.name}" require="true" />
+						<p:message for="name" display="text" />
+
+					</h:panelGrid>
+				</p:panel>
+
+				<p:commandButton id="submitButton" value="Submit"
+					actionListener="#{offerController.add}"
+					update="panelStory :offerForm:offerList">
+				</p:commandButton>
+
+
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

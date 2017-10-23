@@ -1,0 +1,450 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+body * {
+	font-family: Arial, sans-serif;
+}
+#mainBody {
+	
+	padding-bottom: 10px;
+}
+
+#cpBtn{
+	display:none;
+}
+
+#nav {
+	background-color: #bb0000;
+	height: 30px; 
+	margin-bottom: 10px;
+	display:block;
+}
+
+
+
+.article .description h3 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font-size: 1.5em;
+}
+
+
+
+.article:hover .description h3 {
+	color: #bb0000;
+}
+
+.article .description .author {
+	color: #505050;
+	margin-top: 0px;
+	font-size: 10px;
+}
+
+.article .description .author .authorName {
+}
+
+
+
+#nav ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	
+}
+
+#nav ul li {
+	padding-top: 10px;
+	line-height: 30px;
+	display: inline;
+	font-size: 1.2em;
+	margin-left: 12px;
+}
+
+#nav ul li a{
+	text-decoration: none;
+	padding: 0px 1em;
+	color: #fff;
+	display: inline-block;
+}
+
+#nav ul li a:hover{ 
+	background-color: blue;
+}
+
+.story-text {
+	font-size: 0.8em;
+}
+
+
+.cartoon {
+	display: inline-block;
+}
+
+
+#footer ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	text-align: center;
+}
+
+#footer ul li {
+	padding-top: 10px;
+	line-height: 30px;
+	display: inline;
+	font-size: 1.2em;
+	
+	
+}
+
+#footer ul li a{
+	text-decoration: none;
+	padding: .2em 1em;
+	color: black;
+	
+}
+
+#footer ul li a:hover{
+	color: black;
+	
+}
+
+#header {
+	padding-bottom: 10px;
+	padding-top: 35px;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+#topHeader {
+	border-bottom: 1px solid #bbb;
+	border-right: 1px solid #bbb;
+	border-left: 1px solid #bbb;
+	line-height: 31px;
+	padding-left: 10px;
+}
+
+.picture {
+	 
+}
+
+.main-story {
+	float: left;
+	overflow: hidden;
+	position: relative;
+	/*width: 57%;*/
+	width: 100%;
+	height: 280px;
+}
+
+.main-story-shade {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.main-story img {
+	float: left;
+	opacity: 0.8;
+	transition: opcacity .4s;
+}
+.main-story:hover h1 {
+	color: #bb0000;
+}
+
+
+.main-story:hover img {
+	float: left;
+	opacity: 1.0;
+	
+}
+
+.main-excerpt {
+	float: left;
+	font: 300 14px/18px helvetica, arial, sans-serif;
+	margin-top: 0px;
+	overflow: hidden;
+	text-align: center;
+	transition: max-height .4s;
+	width: 100%;
+	text-shadow: 1px 1px 2px #000;
+}
+
+#feature-main {
+	background-color: #000;
+	height: 280px;
+	width: 630px;
+	margin-left: 10px;
+}
+
+.main-text {
+	color: #fff;
+	float: left;
+	padding: 20px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 600px;
+	z-index: 20;
+	padding-bottom: 5px;
+}
+
+.main-text h1 {
+	color: white;
+	float: left;
+	font-size: 40px;
+	font-weight: 700;
+	line-height: 120%;
+	margin: 0 4% 5px;
+	text-align: center;
+	text-decoration: none;
+	
+	text-shadow: 1px 1px 2px #000;
+	text-transform: uppercase;
+	width: 92%;
+}
+
+.sub-story {
+	border-bottom: 1px solid #222;
+	border-left: 1px solid #222;
+	float: left;
+	overflow: hidden;
+	position: relative;
+	width: 330px;
+	height: 199px;
+}
+
+.sub-text {
+	padding: 10px 10px 8px 10px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 310px;
+}
+
+.sub-text h2 {
+	color: #fff;
+	float: left;
+	font-size: 20px;
+	font-weight: 400;
+	line-height: 120%;
+	margin-bottom: 4px;
+	text-shadow: 1px 1px 2px #000;
+	text-transform: uppercase;
+	font-weight: 700;
+	text-align: center;
+	width: 100%;
+}
+
+.sub-text .sub-excerpt {
+	color: #fff;
+	float: left;
+	font-size: 17px;
+	overflow: hidden;
+	transition: max-height .4s;
+	text-shadow: 1px 1px 2px #000;
+	
+}
+
+.article img {
+	opacity: 1;
+	transition: opacity .4s;
+}
+.article:hover img {
+	opacity: 0.8;
+}
+.article:hover .story-text {
+	color: #0000bb;
+}
+
+#story .author {
+	color: #808080;
+	font-size: 0.8em;
+}
+
+.cartoon {
+	width: 300px;
+	height: auto;
+	padding: 5px;
+}
+.cartoon .author, #cartoon .author {
+	color: #808080;
+	font-size: 0.8em;
+	
+}
+#cartoon .author {
+	margin-top: 0px;
+}
+
+
+.cartoon-comment {
+	color: #bb0000;
+	margin: 0px;
+	/*margin-left: 6px;*/
+}
+
+.cartoon-comment span {
+	background-color: #bb0000;
+	color: white;
+	font-weight: bold;
+	padding: 3px;
+	padding-right: 7px;
+	padding-left: 7px;
+	margin-right: 10px;
+	font-size: 0.8em;
+	text-transform: uppercase;
+}
+.category-comment {
+	margin: 0px;
+	background-color: #bb0000;
+	color: white;
+	font-weight: bold;
+	padding: 3px;
+	font-size: 0.8em;
+	padding-right: 7px;
+	padding-left: 7px;
+	text-transform: uppercase;
+}
+
+
+#singlecolumn #main {
+	padding: 10px;
+}
+
+#singlecolumn #cartoon h1 {
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+
+
+.small-article {
+	width: 342px;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	padding-left: 0px;
+}
+
+.small-article .description {
+	float:right;
+	width: 223px;
+	font-size: 11px;
+}
+.small-article .description h4 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font-size: 1.5em;
+	margin-top: 2px;
+}
+
+
+
+.small-article:hover .description h4 {
+	color: #bb0000;
+}
+
+.small-article .description .author {
+	color: #505050;
+	margin-top: 5px;
+	font-size: 10px;
+}
+
+.small-article .description .author .authorName {
+}
+
+.small-article img {
+	opacity: 1;
+	transition: opacity .4s;
+}
+.small-article:hover img {
+	opacity: 0.8;
+}
+.small-article:hover .story-text {
+	color: #0000bb;
+}
+
+.small-article .category-comment {
+	padding: 0px;
+	margin: 3px;
+	margin-right: 7px;
+	margin-left: 0px;
+	padding: 2px;	
+}
+
+.sub-article-heading {
+	background-color: #253740;
+	color: white;
+	padding: 4px;
+	padding-left: 10px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+#footer {
+	background-color: #222;
+	margin-top: 30px;
+	color: #aaa;
+	font: 11px/13px helvetica, arial, sans-serif;
+	padding: 10px 25px 5px;
+	padding-left: 10px;
+}
+.menu-trigger{
+	display:none;
+}
+#inAd{
+	float: right;
+	margin: 10px 0 10px 10px;
+}
+
+.label {
+	width: 100px;
+}
+.value {
+	width: 400px;
+}
+.value input, .value textarea {
+	width: 100%;
+}
+
+#loginPanel, #registerDialog {
+	z-index: 1000; 
+}
+
+.poll-options .poll-opt {
+	padding: 5px;
+	background: #f3f3f3;
+	border: 1px solid #ccc;
+	margin-bottom: 5px;
+}
+
+.poll-options .poll-label {
+	margin-left: 5px;
+}
+
+.poll {
+	border: 1px solid #ccc;
+}
+
+.ui-panel .ui-panel-content, .ui-widget-content {
+	padding: 0px !important;
+	border: 0px none !important;
+}
+
+.article-video {
+	background-color: black;
+	
+}
+
+.cartoon-page #right {
+	width: 300px !important;
+}
+
+.even {
+	clear: left;
+}

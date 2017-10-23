@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition template="/WEB-INF/templates/homepage.xhtml">
+	<ui:param name="pageTitle" value="#{questionSingleController.question.question}" />
+	<ui:param name="pageURL" value="http://zanettisview.com##{questionController.getQuestionURL(questionSingleController.question)}" />
+	<ui:param name="pageType" value="website" />
+	<ui:param name="pageImage" value="http://zanettisview.com#{resource['zanettisview:images/Opinion-poll1.jpg']}" />
+	
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="pollID" value="#{questionSingleController.questionID}">
+				<f:convertNumber integerOnly="#{true}" />
+			</f:viewParam>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="content">
+		<h1 style="padding: 10px; margin: 0px; color: #bb0000">Poll</h1>
+		<ppc:poll question="#{questionSingleController.question}" />
+		<hr />
+		<ppc:social
+				url="http://zanettisview.com##{questionController.getQuestionURL(questionSingleController.question)}"
+				title="#{questionSingleController.question.question}" />
+		<hr />
+		<div id="bottom-ad">
+				<h:outputText value="#{offerController.getOfferHTML('under_article')}" escape="false"/>
+		</div>
+		<hr />
+		<div id="fbContainer">
+			<div class="fb-comments"
+				data-href="http://zanettisview.com##{questionController.getQuestionURL(questionSingleController.question)}"
+				data-width="100%" data-numposts="20"></div>
+		</div>
+	</ui:define>
+	<ui:define name="sidebar">
+		<div class="sub-article-heading">TRENDING STORIES</div>
+			
+			<c:forEach items="#{postClientController.trendingPosts}" var="item">
+				<ppc:sub-article item="#{item}" showcategory="true" ></ppc:sub-article>
+			</c:forEach>
+			<div style="margin-top: 10px">
+			<h:outputText value="#{offerController.getOfferHTML('category_sidebar')}" escape="false"/>
+		</div>
+	</ui:define>
+	
+	
+</ui:composition>
+</html>

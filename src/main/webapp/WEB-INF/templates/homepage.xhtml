@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ppc="http://java.sun.com/jsf/composite/ppcomp"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	>
+<h:head>
+	<title>#{pageTitle} - Zanetti's View</title>
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+	<meta name="google-site-verification" content="uZLj6q7XNSng9sG56RlPa-BM7bHFNp06u6n91Fa9Qko" />
+	<meta name="msvalidate.01" content="13623BFE5413E74CF4ACE5676283ACBF" />
+	<meta charset="UTF-8" />
+	<meta name="description"        content="#{pageDescription}" />
+	
+	<meta property="og:url"                content="http://zanettisview.com#{pageURL}" />
+	<c:choose>
+		<c:when test="#{empty metaTitle}">
+			<meta property="og:type"               content="#{pageType}" />
+		</c:when>
+		<c:otherwise>
+			<meta property="og:type"               content="#{metaTitle}" />
+		</c:otherwise>
+	</c:choose>
+	<meta property="og:title"              content="#{pageTitle}" />
+	<meta property="og:description"        content="#{pageDescription}" />
+	<meta property="og:image"              content="#{pageImage}" />
+	<meta property="fb:app_id"             content="975362932524639" />
+	<meta property="fb:admins"             content="1804608772,554744851" />
+	
+	<meta name="viewport" content="initial-scale=1" />
+	<c:if test="#{pageType == 'article'}">
+		<meta property="article:publisher" content="https://www.facebook.com/Paul-Zanetti-Cartoonist-521460511228671" />
+	</c:if>
+	
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@ZanettiCartoons" />
+	<c:choose>
+		<c:when test="#{empty metaTitle}">
+			<meta name="twitter:title" content="#{pageTitle}" />
+		</c:when>
+		<c:otherwise>
+			<meta name="twitter:title" content="#{metaTitle}" />
+		</c:otherwise>
+	</c:choose>
+	<meta name="twitter:description" content="#{pageDescription}" />
+	<meta name="twitter:image" content="#{pageImage}" />
+	<h:outputScript library="primefaces" name="jquery/jquery.js"/>
+	<h:outputStylesheet library="zanettisview" name="css/main.css"/>
+	<h:outputStylesheet library="zanettisview" name="css/main_desktop.css" media="(min-width: 1000px)"/>
+	<h:outputStylesheet library="zanettisview" name="css/main_mobile.css" media="screen and (max-width: 1000px)"/>
+	<h:outputScript library="zanettisview" name="js/functions.js"></h:outputScript>
+	
+	
+			<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '975362932524639',
+      xfbml      : true,
+      version    : 'v2.4'
+    });
+    //FB.Canvas.setAutoGrow();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+  
+</script>
+
+<script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-4849403104685453",
+    enable_page_level_ads: true
+  });
+</script>
+
+
+</h:head>
+<h:body styleClass="#{pageClass}">
+	
+	<div id="mainBody">
+		<!-- BRENT'S CODE -->
+		<div id="mobile-menu-bar">
+			<ppc:nav navid="nav-mobile" /> <!-- Includes the Menu's Navigation Links -->
+			<ppc:header headerid="header-mobile" /> <!-- Includes Logo, Facebook, Twitter, and Burger Menu -->	
+		</div><!-- End of mobile menu-bar -->
+		<!-- BRENT'S CODE -->
+		<!-- <ppc:login/> -->
+		<ppc:header headerid="header" />
+		<div id="loginContainer">
+			<ppc:login/>
+		</div>
+		<div class="container">
+		<div style="margin-bottom: 8px; font-size: 11px; width: 185px; text-align: center;">
+			<h:outputText value="#{session.lastAccessedTime}">
+			<f:convertDateTime pattern="EEEE d MMMM yyyy" />
+			</h:outputText>
+			</div>
+		</div>
+		<div style="clear: both;"></div> 	
+		
+		<ppc:nav navid="nav" />
+		<div id="advertising" class="container" style="margin-bottom: 10px;">
+			<h:outputText value="#{offerController.getOfferHTML('top_banner')}" escape="false"/>
+		</div> 
+		<div id="main" class="container" style="padding-top: 10px">
+			<ui:insert name="abovecontent"></ui:insert>
+			<div style="clear: both;"></div>
+			<div id="right">
+			<ui:insert name="sidebar" />
+			</div>
+			<div id="left"><ui:insert name="content"></ui:insert></div>
+			<div style="clear: both"></div>
+			<div id="footer">
+				Copyright © 2015 Zanetti's View 
+			</div>
+		</div>
+		
+	</div>
+	
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-67554073-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</h:body>
+</html>
